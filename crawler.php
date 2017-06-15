@@ -13,19 +13,34 @@ function crawl_page($url, $depth = 5)
     $dom = new DOMDocument('1.0');
     @$dom->loadHTMLFile($url);
     $finder = new DomXPath($dom);
-$classname="clientSortedRow";
-$nodes = $finder->query("//*[contains(concat(' ', normalize-space(@class), ' '), ' $classname ')]");
+    //$classname="fundToplist";
+    $classname="clientSortedRow";
+    //$nodes = $finder->query("//*[contains(concat(' ', normalize-space(@class), ' '), ' $classname ')]");
+    $nodes = $finder->query("//*[contains(@class, '$classname')]");
+    //$domHTML = $dom->saveXML($nodes);
+    //$finder = new Zend_Dom_Query($dom);
+//$classname = 'clientSortedRow';
+//$nodes = $finder->query("*[class~=\"$classname\"]");
+    
     foreach ($nodes as $node) {
-        $instrumentName = $node->query("//*[contains(concat(' ', normalize-space(@class), ' '), 'instrumentName')]");
-        $instrumentOwners = $node->query("//*[contains(concat(' ', normalize-space(@class), ' '), 'totalAccounts')]");
-    $domHTML = $dom->saveHTML($node);
-        $instrumentYearlyChange = $node->query("//*[contains(concat(' ', normalize-space(@class), ' '), 'totalAccounts')]");
-    $domHTML = $dom->saveHTML($node);
-        include 'mysql/mysql-insert.php';
+        //$nodeDom->loadHTML($node);
+        $nodeHTML = new DomXPath($node);
+        /*$nodeClassname="clientSortedRow";
+        $nodeNodes = $nodeDomXPath->query("//*[contains(@class, '$nodeClassname')]");
+        foreach ($nodeNodes as $nodeNode) {
+        
+        }*/
+        $instrumentName = $nodeHTML->query("//*[contains(concat(' ', normalize-space(@class), ' '), 'instrumentName')]");
+        $instrumentOwners = $nodeHTML->query("//*[contains(concat(' ', normalize-space(@class), ' '), 'totalAccounts')]");
+        $instrumentYearlyChange = $nodeHTML->query("//*[contains(concat(' ', normalize-space(@class), ' '), 'total')]");
+        $domHTML = $dom->saveHTML($node);
+        $domHTML = $dom->saveHTML($instrumentName);
+                $domHTML = $dom->saveHTML($instrumentOwners);
+                $domHTML = $dom->saveHTML($instrumentYearlyChange);
+        //include 'mysql/mysql-insert.php';
         echo $domHTML;
     }
-    
-
+/*
     $anchors = $dom->getElementsByTagName('a');
     $archive = $dom->getElementById('archives-2');
     foreach ($anchors as $element) {
@@ -48,8 +63,11 @@ $nodes = $finder->query("//*[contains(concat(' ', normalize-space(@class), ' '),
             }
         }
         crawl_page($href, $depth - 1);
-    }
+    }*/
     //echo "URL:",$url,PHP_EOL,"CONTENT:",PHP_EOL,$dom->saveHTML(),PHP_EOL,PHP_EOL;
     //echo "ARCHIVE:",$dom->saveHTML($nodes);
 }
-crawl_page("http://www.avanza.se/lar-dig-mer/kom-igang/fondtips.html", 1);
+?>
+    <table>
+        <?php crawl_page("http://www.avanza.se/lar-dig-mer/kom-igang/fondtips.html", 1); ?>
+    </table>

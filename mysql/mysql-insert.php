@@ -9,7 +9,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 } 
 
-$sql = "INSERT INTO stock (stockName) VALUES ('". $domHTML ."')";
+//$sql = "INSERT INTO stock (stockName) VALUES ('" $instrumentName "', " $instrumentOwners ", " $instrumentYearlyChange ")";
 
 if ($conn->query($sql) === TRUE) {
     echo "New record created successfully";
