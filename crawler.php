@@ -23,21 +23,26 @@ function crawl_page($url, $depth = 5)
 //$nodes = $finder->query("*[class~=\"$classname\"]");
     
     foreach ($nodes as $node) {
+        //$nodeHTML = $node->saveHTML();
+        //$nodeDOM = new DOMDocument('1.0');
+        //$nodeDOM->loadXML($nodeHTML);
+        $trs = $node->getElementsByTagName('td');
         //$nodeDom->loadHTML($node);
-        $nodeHTML = new DomXPath($node);
+        //$nodeHTML->new DomXPath($node);
         /*$nodeClassname="clientSortedRow";
         $nodeNodes = $nodeDomXPath->query("//*[contains(@class, '$nodeClassname')]");
         foreach ($nodeNodes as $nodeNode) {
         
         }*/
-        $instrumentName = $nodeHTML->query("//*[contains(concat(' ', normalize-space(@class), ' '), 'instrumentName')]");
-        $instrumentOwners = $nodeHTML->query("//*[contains(concat(' ', normalize-space(@class), ' '), 'totalAccounts')]");
-        $instrumentYearlyChange = $nodeHTML->query("//*[contains(concat(' ', normalize-space(@class), ' '), 'total')]");
-        $domHTML = $dom->saveHTML($node);
-        $domHTML = $dom->saveHTML($instrumentName);
-                $domHTML = $dom->saveHTML($instrumentOwners);
-                $domHTML = $dom->saveHTML($instrumentYearlyChange);
+        //$instrumentName = $nodeHTML->query("//*[contains(concat(' ', normalize-space(@class), ' '), 'instrumentName')]");
+        //$instrumentOwners = $nodeHTML->query("//*[contains(concat(' ', normalize-space(@class), ' '), 'totalAccounts')]");
+        //$instrumentYearlyChange = $nodeHTML->query("//*[contains(concat(' ', normalize-space(@class), ' '), 'total')]");
+        $domHTML = $dom->saveHTML($trs[1]);
+        //$domHTML = $dom->saveHTML($instrumentName);
+        //        $domHTML = $dom->saveHTML($instrumentOwners);
+        //        $domHTML = $dom->saveHTML($instrumentYearlyChange);
         //include 'mysql/mysql-insert.php';
+        //echo $trs[1];
         echo $domHTML;
     }
 /*
